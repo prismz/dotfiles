@@ -1,0 +1,16 @@
+#[general]
+#import = [
+#    "~/.config/alacritty/themes/themes/solarized_dark.toml"
+#]
+
+[cursor]
+style = {shape='Block', blinking='On'}
+blink_interval = 500
+
+[window]
+opacity = 0.65
+
+[keyboard]
+bindings = [
+        { key="Enter", mods="Control|Shift", action="SpawnNewInstance" }
+]
