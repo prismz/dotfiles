@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Easily create C files - cf alarm -> alarm.c&alarm.h (#ifndef ALARM_H + #include "alarm.h")
+# TODO: separate source/header directories
+
+# exit on error
+set -e
+
+if [ "$#" -eq 0 ]; then
+        echo "Provide file name(s) without extension: e.g. `cf alarm` -> alarm.c & alarm.h"
+        exit 1
+fi
+
+for filename in "$@"
+do
+        SOURCEFILE="${filename}.c"
+        HEADERFILE="${filename}.h"
+
+        HEADERGUARD="${filename^^}_H"
+        HEADERNAME="$(basename $HEADERFILE)"
+
+        if [[ -f "$SOURCEFILE" ]] || [[ -f "$HEADERFILE" ]]; then
+                echo "One of the source files to create ($SOURCEFILE, $HEADERFILE) already exist - skipping"
+                continue
+        fi
+
+        echo "Created $SOURCEFILE & $HEADERFILE with include guard $HEADERGUARD"
+
+        echo -e "#include \"$HEADERNAME\"" > "$SOURCEFILE"
+        echo -e "#ifndef $HEADERGUARD\n#define $HEADERGUARD\n\n\n#endif  /* $HEADERGUARD */" > "$HEADERFILE"
+done

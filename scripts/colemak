@@ -1,0 +1,2 @@
+#!/bin/sh
+setxkbmap "us,us" -variant "colemak," -option grp:win_space_toggle
